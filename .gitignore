@@ -1,0 +1,28 @@
+# dependencies
+/node_modules
+
+# next.js
+/.next/
+/out/
+
+# production
+/build
+
+# misc
+.DS_Store
+*.pem
+
+# debug
+npm-debug.log*
+
+# env files (NEVER commit secrets)
+.env
+.env.local
+.env*.local
+
+# generated alert cache
+/data/cache/
+
+# typescript
+*.tsbuildinfo
+next-env.d.ts

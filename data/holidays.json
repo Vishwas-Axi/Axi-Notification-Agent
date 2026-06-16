@@ -1,0 +1,23 @@
+{
+  "_comment": "US market (NYSE/Nasdaq) and Federal Reserve holidays. 'markets' indicates which venues are closed. Verify against the official Fed schedule before relying on these for live alerts: https://www.frbservices.org/about/holiday-schedules/",
+  "source": {
+    "label": "Federal Reserve Financial Services holiday schedule",
+    "url": "https://www.frbservices.org/about/holiday-schedules/"
+  },
+  "holidays": [
+    { "date": "2026-01-01", "name": "New Year's Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-01-19", "name": "Martin Luther King Jr. Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-02-16", "name": "Washington's Birthday (Presidents' Day)", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-04-03", "name": "Good Friday", "markets": ["NYSE", "Nasdaq"] },
+    { "date": "2026-05-25", "name": "Memorial Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-06-19", "name": "Juneteenth National Independence Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-07-03", "name": "Independence Day (observed)", "markets": ["NYSE", "Nasdaq"] },
+    { "date": "2026-09-07", "name": "Labor Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-10-12", "name": "Columbus Day", "markets": ["Fed"] },
+    { "date": "2026-11-11", "name": "Veterans Day", "markets": ["Fed"] },
+    { "date": "2026-11-26", "name": "Thanksgiving Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2026-12-25", "name": "Christmas Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2027-01-01", "name": "New Year's Day", "markets": ["NYSE", "Nasdaq", "Fed"] },
+    { "date": "2027-01-18", "name": "Martin Luther King Jr. Day", "markets": ["NYSE", "Nasdaq", "Fed"] }
+  ]
+}

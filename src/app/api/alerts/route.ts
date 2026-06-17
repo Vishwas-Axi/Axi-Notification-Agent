@@ -3,6 +3,8 @@ import { readCache, writeCache } from "@/lib/cache";
 import { generateAlerts } from "@/lib/generate";
 
 export const dynamic = "force-dynamic";
+// First load on a cold cache generates the bundle (FMP + RSS + OpenAI). Give it room.
+export const maxDuration = 60;
 
 /**
  * GET /api/alerts — return the cached alert bundle.

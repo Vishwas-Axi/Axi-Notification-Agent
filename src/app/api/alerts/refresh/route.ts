@@ -4,7 +4,8 @@ import { generateAlerts } from "@/lib/generate";
 
 export const dynamic = "force-dynamic";
 // Generating drafts (FMP fetches + OpenAI calls) can take a while.
-export const maxDuration = 120;
+// 60s is the Vercel Hobby ceiling; generation typically completes in 20–40s.
+export const maxDuration = 60;
 
 /** POST /api/alerts/refresh — regenerate alerts from live data and update the cache. */
 export async function POST() {

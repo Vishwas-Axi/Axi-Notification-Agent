@@ -3,7 +3,8 @@ import { buildMarketSnapshot } from "@/lib/builders/shared";
 import { buildHolidayAlerts } from "@/lib/builders/holidays";
 import { buildMacroAlerts } from "@/lib/builders/macro";
 import { buildIpoAlerts } from "@/lib/builders/ipo";
-import { buildNewsAlerts } from "@/lib/builders/news";
+import { buildNewsAlerts, type HotStory } from "@/lib/builders/news";
+import { buildCorrelationAlerts } from "@/lib/builders/correlation";
 import { refineAlert } from "@/lib/llm";
 import { mapLimit } from "@/lib/concurrency";
 
@@ -27,21 +28,31 @@ export async function generateAlerts(now: Date = new Date()): Promise<AlertBundl
     buildHolidayAlerts(now).then((a) => ({ alerts: a, warnings: [] as string[] })).catch((e) => ({ alerts: [] as Alert[], warnings: [`holiday: ${(e as Error).message}`] })),
     buildMacroAlerts(now, snapshot).catch((e) => ({ alerts: [] as Alert[], warnings: [`macro: ${(e as Error).message}`] })),
     buildIpoAlerts(now).catch((e) => ({ alerts: [] as Alert[], warnings: [`ipo: ${(e as Error).message}`] })),
-    buildNewsAlerts(now, snapshot).catch((e) => ({ alerts: [] as Alert[], warnings: [`news: ${(e as Error).message}`] })),
+    buildNewsAlerts(now, snapshot).catch((e) => ({ alerts: [] as Alert[], warnings: [`news: ${(e as Error).message}`], topStories: [] as HotStory[] })),
   ]);
 
-  for (const r of [holidayRes, macroRes, ipoRes, newsRes]) warnings.push(...r.warnings);
+  // Correlation runs after news — it weaves the deduped top stories into a narrative.
+  const correlationRes = await buildCorrelationAlerts(now, snapshot, newsRes.topStories).catch((e) => ({
+    alerts: [] as Alert[],
+    warnings: [`correlation: ${(e as Error).message}`],
+  }));
+
+  for (const r of [holidayRes, macroRes, ipoRes, newsRes, correlationRes]) warnings.push(...r.warnings);
 
   const alerts: Alert[] = [
     ...holidayRes.alerts,
     ...macroRes.alerts,
     ...ipoRes.alerts,
     ...newsRes.alerts,
+    ...correlationRes.alerts,
   ];
 
-  // AI refinement (best-effort, bounded concurrency).
+  // AI refinement (best-effort, bounded concurrency). Correlation cards are already
+  // AI-composed, so they're marked refined and skipped here rather than re-written.
   if (process.env.OPENAI_API_KEY) {
-    await mapLimit(alerts, 4, async (a) => {
+    for (const a of alerts) if (a.family === "correlation") a.refined = true;
+    const refinable = alerts.filter((a) => a.family !== "correlation");
+    await mapLimit(refinable, 4, async (a) => {
       try {
         const r = await refineAlert(a, DEFAULT_AUDIENCE);
         if (r.refined) {

@@ -134,6 +134,7 @@ a:hover { text-decoration: underline; }
 .badge.family-macro { background: #e7f5fe; color: #0e74a8; }
 .badge.family-ipo { background: #e9f9f0; color: #138a52; }
 .badge.family-news { background: var(--accent-soft); color: var(--accent-strong); }
+.badge.family-correlation { background: #f3eeff; color: #6d3fc4; }
 .badge.timing { background: var(--bg-soft); color: var(--muted); border-color: var(--border-2); }
 .badge.status-ready { background: #e9f9f0; color: var(--ready); }
 .badge.status-needs_review { background: #fff5e6; color: var(--review); }

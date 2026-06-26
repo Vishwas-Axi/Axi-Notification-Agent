@@ -8,10 +8,11 @@ type Filter = "all" | AlertFamily;
 
 const FILTERS: { key: Filter; label: string }[] = [
   { key: "all", label: "All" },
-  { key: "holiday", label: "Holidays" },
+  { key: "news", label: "News" },
+  { key: "correlation", label: "Connections" },
   { key: "macro", label: "Macro" },
   { key: "ipo", label: "IPO" },
-  { key: "news", label: "News" },
+  { key: "holiday", label: "Holidays" },
 ];
 
 export default function Dashboard({
@@ -69,7 +70,7 @@ export default function Dashboard({
 
   const alerts = bundle?.alerts ?? [];
   const counts = useMemo(() => {
-    const c: Record<string, number> = { all: alerts.length, holiday: 0, macro: 0, ipo: 0, news: 0 };
+    const c: Record<string, number> = { all: alerts.length, holiday: 0, macro: 0, ipo: 0, news: 0, correlation: 0 };
     for (const a of alerts) c[a.family] = (c[a.family] ?? 0) + 1;
     return c;
   }, [alerts]);

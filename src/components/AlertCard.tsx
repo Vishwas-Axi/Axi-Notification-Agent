@@ -8,6 +8,7 @@ const FAMILY_LABEL: Record<Alert["family"], string> = {
   macro: "Macro",
   ipo: "IPO",
   news: "News",
+  correlation: "Connections",
 };
 
 export default function AlertCard({

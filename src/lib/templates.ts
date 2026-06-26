@@ -24,7 +24,7 @@ export const TEMPLATES = {
 
   ipo_pricing: `IPO Pricing: {company_name} ({symbol}) on {exchange} — range {price_range}, first trade {listing_date}, {shares} shares, indicated cap {market_cap}. Confirm instrument availability before the open.`,
 
-  news_volatility: `{headline}
+  news_volatility: `{emoji} {headline}
 
 {publisher} · {published_ago} · potential impact: {topic}.
 {asset_move_summary}`,

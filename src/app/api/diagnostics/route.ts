@@ -34,5 +34,10 @@ export async function GET() {
   checks["teams.webhook"] = { ok: isTeamsConfigured(), detail: isTeamsConfigured() ? "configured" : "not configured (optional)" };
 
   const allOk = Object.values(checks).every((c) => c.ok);
-  return NextResponse.json({ ok: allOk, openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini", checks });
+  return NextResponse.json({
+    ok: allOk,
+    openaiModel: process.env.OPENAI_MODEL || "gpt-4o-mini",
+    openaiSearchModel: process.env.OPENAI_SEARCH_MODEL || "gpt-4o-mini-search-preview",
+    checks,
+  });
 }

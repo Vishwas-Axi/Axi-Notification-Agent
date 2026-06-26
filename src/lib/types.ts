@@ -1,4 +1,4 @@
-export type AlertFamily = "holiday" | "macro" | "ipo" | "news";
+export type AlertFamily = "holiday" | "macro" | "ipo" | "news" | "correlation";
 
 export type AlertSeverity = "info" | "watch" | "high";
 
